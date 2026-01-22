@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sorted – Bayside Local Services</title>
 
   <style>
-    /* ---------- RESET ---------- */
+    /* ================= RESET ================= */
     * {
       margin: 0;
       padding: 0;
@@ -16,28 +16,27 @@
 
     html, body {
       width: 100%;
-      max-width: 100%;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
       color: #fff;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      line-height: 1.6;
       min-height: 100vh;
     }
 
-    /* ---------- NAV ---------- */
+    /* ================= NAV ================= */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
+      padding: 1rem;
       background: rgba(10, 10, 10, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
-      padding: 1rem;
     }
 
     .nav-container {
@@ -57,17 +56,17 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* ---------- CANVAS ---------- */
+    /* ================= CANVAS ================= */
     #three-canvas {
       position: fixed;
       inset: 0;
       z-index: 1;
     }
 
-    /* ---------- HERO ---------- */
-    .hero-section {
+    /* ================= HERO ================= */
+    .hero {
       min-height: 100vh;
-      padding: 6rem 1rem 3rem;
+      padding: 7rem 1rem 3rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -81,18 +80,11 @@
       width: 100%;
     }
 
-    .hero-title {
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4.5rem);
       font-weight: 800;
       line-height: 1.15;
-      font-size: clamp(2rem, 6vw, 4.5rem);
       margin-bottom: 1.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 3.5vw, 1.4rem);
-      max-width: 720px;
-      margin: 0 auto 2.5rem;
-      color: #eaeaea;
     }
 
     .gradient-text {
@@ -101,36 +93,40 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* ---------- BUTTON ---------- */
+    .hero p {
+      font-size: clamp(1rem, 3.5vw, 1.4rem);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      color: #eaeaea;
+    }
+
+    /* ================= BUTTON ================= */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-height: 48px;
       padding: 1rem 2.4rem;
+      border-radius: 14px;
       font-size: 1.05rem;
       font-weight: 600;
-      border-radius: 14px;
-      text-decoration: none;
       border: none;
       cursor: pointer;
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-
-    .btn-primary {
+      text-decoration: none;
       color: #fff;
       background: linear-gradient(135deg, #667eea, #764ba2);
       box-shadow: 0 6px 20px rgba(102,126,234,.35);
+      transition: transform .3s ease, box-shadow .3s ease;
     }
 
     @media (hover: hover) {
-      .btn-primary:hover {
+      .btn:hover {
         transform: translateY(-3px);
         box-shadow: 0 12px 30px rgba(102,126,234,.45);
       }
     }
 
-    /* ---------- SECTIONS ---------- */
+    /* ================= SECTION ================= */
     .section {
       padding: 5rem 1rem;
       max-width: 1200px;
@@ -149,15 +145,14 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* ---------- PROCESS ---------- */
-    .process-steps {
+    /* ================= PROCESS ================= */
+    .process {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
-      margin-top: 3rem;
     }
 
-    .step-card {
+    .card {
       background: rgba(20,20,40,.9);
       border: 2px solid rgba(102,126,234,.5);
       border-radius: 18px;
@@ -165,24 +160,32 @@
       text-align: center;
     }
 
-    .step-number {
+    .number {
       width: 56px;
       height: 56px;
+      margin: 0 auto 1rem;
       border-radius: 50%;
       background: linear-gradient(135deg, #667eea, #764ba2);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      margin: 0 auto 1rem;
     }
 
-    /* ---------- WHY GRID ---------- */
+    /* ================= WHY ================= */
+    .why {
+      margin-top: 4rem;
+      background: rgba(20,20,40,.9);
+      border: 2px solid rgba(102,126,234,.5);
+      border-radius: 20px;
+      padding: 3rem;
+    }
+
     .why-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
-      margin-top: 2.5rem;
+      margin-top: 2rem;
     }
 
     .why-card {
@@ -192,8 +195,8 @@
       border: 1px solid rgba(102,126,234,.35);
     }
 
-    /* ---------- FORM ---------- */
-    .contact-form {
+    /* ================= FORM ================= */
+    .form {
       max-width: 600px;
       margin: 0 auto;
       padding: 2.5rem;
@@ -202,44 +205,38 @@
       border-radius: 22px;
     }
 
-    .form-group {
+    .field {
       margin-bottom: 1.4rem;
     }
 
-    .form-group label {
+    label {
       display: block;
       margin-bottom: .4rem;
       font-weight: 500;
     }
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
+    input, textarea, select {
       width: 100%;
       padding: .9rem;
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,.35);
       background: rgba(255,255,255,.25);
       color: #fff;
+      font-size: 1rem;
     }
 
-    textarea { resize: vertical; }
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
 
-    /* ---------- MOBILE ---------- */
+    /* ================= MOBILE ================= */
     @media (max-width: 768px) {
       #three-canvas { display: none; }
-
-      .process-steps {
-        grid-template-columns: 1fr;
-      }
-
-      .why-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-form {
-        padding: 2rem 1.4rem;
-      }
+      .process { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .why { padding: 2rem 1.5rem; }
+      .form { padding: 2rem 1.4rem; }
     }
   </style>
 </head>
@@ -254,65 +251,52 @@
 
 <canvas id="three-canvas"></canvas>
 
-<section class="hero-section">
+<section class="hero">
   <div class="hero-content">
-    <h1 class="hero-title">Get Your Bayside Jobs <span class="gradient-text">Sorted</span></h1>
-    <p class="hero-subtitle">
-      Tell us what you need done around your Bayside home.
-      We’ll personally connect you with 3 trusted local professionals.
-    </p>
-    <a href="#request-form" class="btn btn-primary">Get Your 3 Recommendations</a>
+    <h1>Get Your Bayside Jobs <span class="gradient-text">Sorted</span></h1>
+    <p>Tell us what you need done around your Bayside home. We’ll connect you with 3 trusted local professionals.</p>
+    <a href="#form" class="btn">Get Your 3 Recommendations</a>
   </div>
 </section>
 
 <section class="section">
   <h2 class="section-title">How It Works</h2>
 
-  <div class="process-steps">
-    <div class="step-card">
-      <div class="step-number">1</div>
+  <div class="process">
+    <div class="card">
+      <div class="number">1</div>
       <h3>Tell Us What You Need</h3>
-      <p>Describe your job, location, and timeframe.</p>
+      <p>Describe the job, suburb, and timeframe.</p>
     </div>
-    <div class="step-card">
-      <div class="step-number">2</div>
-      <h3>We Find Your Match</h3>
-      <p>We personally select the best local professionals.</p>
+    <div class="card">
+      <div class="number">2</div>
+      <h3>We Find the Right Match</h3>
+      <p>We hand-pick trusted local professionals.</p>
     </div>
-    <div class="step-card">
-      <div class="step-number">3</div>
+    <div class="card">
+      <div class="number">3</div>
       <h3>Get Recommendations</h3>
       <p>You receive 3 vetted options within 24 hours.</p>
     </div>
   </div>
-</section>
 
-<section class="section" id="request-form">
-  <h2 class="section-title">Request Your Recommendations</h2>
+  <div class="why">
+    <h3 style="text-align:center;">Why Choose Sorted?</h3>
 
-  <form class="contact-form" action="https://formspree.io/f/xqadyoko" method="POST">
-    <div class="form-group">
-      <label>Name *</label>
-      <input type="text" name="name" required>
-    </div>
-    <div class="form-group">
-      <label>Email *</label>
-      <input type="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label>Describe Your Job *</label>
-      <textarea name="job" required></textarea>
-    </div>
-    <button class="btn btn-primary" style="width:100%">Get My 3 Recommendations</button>
-  </form>
-</section>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-  if (window.innerWidth > 768) {
-    // keep your existing Three.js code here unchanged
-  }
-</script>
-
-</body>
-</html>
+    <div class="why-grid">
+      <div class="why-card">
+        <strong>✓ Locally Vetted</strong>
+        <p>Every professional is personally checked.</p>
+      </div>
+      <div class="why-card">
+        <strong>✓ Bayside Based</strong>
+        <p>All tradies are local to Bayside.</p>
+      </div>
+      <div class="why-card">
+        <strong>✓ No Obligation</strong>
+        <p>Free recommendations, no pressure.</p>
+      </div>
+      <div class="why-card">
+        <strong>✓ Personal Service</strong>
+        <p>Real people — not an algorithm.</p>
+      </div>
