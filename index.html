@@ -1,250 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sorted – Bayside Local Services</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorted – Bayside Local Services</title>
+<style>
+/* ---------- RESET ---------- */
+* {margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html, body {width:100%;max-width:100%;overflow-x:hidden;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;}
+html::-webkit-scrollbar, body::-webkit-scrollbar {display:none;}
+body {font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;color:#fff;background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 50%,#16213e 100%);min-height:100vh;}
 
-  <style>
-    /* ---------- RESET ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+/* ---------- NAV ---------- */
+nav {position:fixed;top:0;width:100%;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);z-index:1000;padding:1rem;}
+.nav-container {max-width:1200px;margin:0 auto;display:flex;justify-content:center;align-items:center;}
+.logo {font-size:2.2rem;font-weight:800;letter-spacing:2px;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-    html, body {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
+/* ---------- CANVAS ---------- */
+#three-canvas {position:fixed;inset:0;z-index:1;pointer-events:none;}
 
-      /* 🔴 REMOVE SCROLLBAR (ALL BROWSERS) */
-      scrollbar-width: none;          /* Firefox */
-      -ms-overflow-style: none;       /* IE/Edge */
-    }
+/* ---------- HERO ---------- */
+.hero-section {min-height:100vh;padding:6rem 1rem 3rem;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;z-index:10;}
+.hero-content {max-width:900px;width:100%;}
+.hero-title {font-weight:800;line-height:1.15;font-size:clamp(2rem,6vw,4.5rem);margin-bottom:1.5rem;}
+.hero-subtitle {font-size:clamp(1rem,3.5vw,1.4rem);max-width:720px;margin:0 auto 2.5rem;color:#eaeaea;}
+.gradient-text {background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-    html::-webkit-scrollbar,
-    body::-webkit-scrollbar {
-      display: none;                  /* Chrome, Safari */
-    }
+/* ---------- BUTTON ---------- */
+.btn {display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:1rem 2.4rem;font-size:1.05rem;font-weight:600;border-radius:14px;text-decoration:none;border:none;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;}
+.btn-primary {color:#fff;background:linear-gradient(135deg,#667eea,#764ba2);box-shadow:0 6px 20px rgba(102,126,234,.35);}
+@media(hover:hover){.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(102,126,234,.45);}}
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.6;
-      color: #fff;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-      min-height: 100vh;
-    }
+/* ---------- SECTIONS ---------- */
+.section {padding:5rem 1rem;max-width:1200px;margin:0 auto;position:relative;z-index:10;}
+.section-title {text-align:center;font-size:clamp(1.8rem,5vw,3rem);font-weight:700;margin-bottom:2.5rem;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-    /* ---------- NAV ---------- */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10, 10, 10, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 1000;
-      padding: 1rem;
-    }
+/* ---------- PROCESS ---------- */
+.process-steps {display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;}
+.step-card {background:rgba(20,20,40,.9);border:2px solid rgba(102,126,234,.5);border-radius:18px;padding:2rem;text-align:center;}
+.step-number {width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-weight:700;margin:0 auto 1rem;}
 
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+/* ---------- FORM ---------- */
+.contact-form {max-width:600px;margin:0 auto;padding:2.5rem;background:rgba(20,20,40,.95);border:2px solid rgba(102,126,234,.5);border-radius:22px;}
+.form-group {margin-bottom:1.4rem;}
+.form-group label {display:block;margin-bottom:.4rem;font-weight:500;}
+.form-group input,.form-group textarea{width:100%;padding:.9rem;border-radius:10px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.25);color:#fff;}
+textarea{resize:vertical;}
 
-    .logo {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* ---------- CANVAS ---------- */
-    #three-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* ---------- HERO ---------- */
-    .hero-section {
-      min-height: 100vh;
-      padding: 6rem 1rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    .hero-content {
-      max-width: 900px;
-      width: 100%;
-    }
-
-    .hero-title {
-      font-weight: 800;
-      line-height: 1.15;
-      font-size: clamp(2rem, 6vw, 4.5rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1rem, 3.5vw, 1.4rem);
-      max-width: 720px;
-      margin: 0 auto 2.5rem;
-      color: #eaeaea;
-    }
-
-    .gradient-text {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* ---------- BUTTON ---------- */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 1rem 2.4rem;
-      font-size: 1.05rem;
-      font-weight: 600;
-      border-radius: 14px;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      box-shadow: 0 6px 20px rgba(102,126,234,.35);
-    }
-
-    @media (hover: hover) {
-      .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 30px rgba(102,126,234,.45);
-      }
-    }
-
-    /* ---------- SECTIONS ---------- */
-    .section {
-      padding: 5rem 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 10;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* ---------- PROCESS ---------- */
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .step-card {
-      background: rgba(20,20,40,.9);
-      border: 2px solid rgba(102,126,234,.5);
-      border-radius: 18px;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .step-number {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      margin: 0 auto 1rem;
-    }
-
-    /* ---------- FORM ---------- */
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 2.5rem;
-      background: rgba(20,20,40,.95);
-      border: 2px solid rgba(102,126,234,.5);
-      border-radius: 22px;
-    }
-
-    .form-group {
-      margin-bottom: 1.4rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: .4rem;
-      font-weight: 500;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: .9rem;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,.35);
-      background: rgba(255,255,255,.25);
-      color: #fff;
-    }
-
-    textarea { resize: vertical; }
-
-    /* ---------- MOBILE ---------- */
-    @media (max-width: 768px) {
-      #three-canvas { display: none; }
-
-      .process-steps {
-        grid-template-columns: 1fr;
-      }
-
-      .contact-form {
-        padding: 2rem 1.4rem;
-      }
-    }
-  </style>
+/* ---------- MOBILE ---------- */
+@media(max-width:768px){
+  .process-steps{grid-template-columns:1fr;}
+  .contact-form{padding:2rem 1.4rem;}
+}
+</style>
 </head>
-
 <body>
 
 <nav>
-  <div class="nav-container">
-    <div class="logo">Sorted</div>
-  </div>
+  <div class="nav-container"><div class="logo">Sorted</div></div>
 </nav>
 
 <canvas id="three-canvas"></canvas>
 
-<!-- Everything else INCLUDING Three.js script remains UNCHANGED -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Get Your Bayside Jobs <span class="gradient-text">Sorted</span></h1>
+    <p class="hero-subtitle">Tell us what you need done around your Bayside home. We'll personally connect you with 3 trusted local professionals.</p>
+    <a href="#request-form" class="btn btn-primary">Get Your 3 Recommendations</a>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">How It Works</h2>
+  <div class="process-steps">
+    <div class="step-card"><div class="step-number">1</div><h3>Tell Us What You Need</h3><p>Describe your job, location, and timeframe.</p></div>
+    <div class="step-card"><div class="step-number">2</div><h3>We Find Your Match</h3><p>We personally select the best local professionals.</p></div>
+    <div class="step-card"><div class="step-number">3</div><h3>Get Recommendations</h3><p>You receive 3 vetted options within 24 hours.</p></div>
+  </div>
+</section>
+
+<section class="section" id="request-form">
+  <h2 class="section-title">Request Your Recommendations</h2>
+  <form class="contact-form" action="https://formspree.io/f/xqadyoko" method="POST">
+    <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+    <div class="form-group"><label>Email *</label><input type="email" name="email" required></div>
+    <div class="form-group"><label>Describe Your Job *</label><textarea name="job" required></textarea></div>
+    <button class="btn btn-primary" style="width:100%">Get My 3 Recommendations</button>
+  </form>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+let scene, camera, renderer, cube, torus, particles;
+let mouseX=0, mouseY=0;
+let particleCount = window.innerWidth < 768 ? 800 : 2000; // fewer particles on mobile
+
+function initThree(){
+  const canvas=document.getElementById('three-canvas');
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+  renderer=new THREE.WebGLRenderer({canvas:canvas,alpha:true});
+  renderer.setSize(window.innerWidth,window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+
+  // Cube
+  const cubeGeo=new THREE.BoxGeometry(2,2,2);
+  const cubeMat=new THREE.MeshBasicMaterial({color:0x667eea,wireframe:true,transparent:true,opacity:0.6});
+  cube=new THREE.Mesh(cubeGeo,cubeMat); cube.position.set(-8,-3,-5); scene.add(cube);
+
+  // Torus
+  const torusGeo=new THREE.TorusGeometry(1.5,0.5,8,25);
+  const torusMat=new THREE.MeshBasicMaterial({color:0x764ba2,wireframe:true,transparent:true,opacity:0.7});
+  torus=new THREE.Mesh(torusGeo,torusMat); torus.position.set(8,3,-5); scene.add(torus);
+
+  // Particles
+  const positions=new Float32Array(particleCount*3);
+  for(let i=0;i<positions.length;i++){positions[i]=(Math.random()-0.5)*100;}
+  const particleGeo=new THREE.BufferGeometry();
+  particleGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+  const particleMat=new THREE.PointsMaterial({size:1.5,opacity:0.8,transparent:true,color:0x667eea});
+  particles=new THREE.Points(particleGeo,particleMat);
+  scene.add(particles);
+
+  camera.position.z=8;
+
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/window.innerWidth)*2-1; mouseY=-(e.clientY/window.innerHeight)*2+1;});
+
+  animate();
+}
+
+function animate(){
+  requestAnimationFrame(animate);
+  const t=Date.now()*0.001;
+
+  if(cube){cube.rotation.x+=0.01; cube.rotation.y+=0.01; cube.position.y=-3+Math.sin(t)*0.5;}
+  if(torus){torus.rotation.x+=0.005; torus.rotation.z+=0.015; torus.position.y=3+Math.cos(t)*0.5;}
+  if(particles){particles.rotation.y+=0.002;}
+
+  cube.rotation.y+=mouseX*0.01; cube.rotation.x+=mouseY*0.01;
+  torus.rotation.y-=mouseX*0.008; torus.rotation.x-=mouseY*0.008;
+
+  renderer.render(scene,camera);
+}
+
+window.addEventListener('resize',()=>{
+  camera.aspect=window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
+
+window.addEventListener('load',initThree);
+</script>
 
 </body>
 </html>
