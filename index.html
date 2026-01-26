@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sorted – Bayside Local Services</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    /* ================= RESET ================= */
+    /* ---------- RESET ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -16,27 +20,41 @@
 
     html, body {
       width: 100%;
+      max-width: 100%;
       overflow-x: hidden;
       scroll-behavior: smooth;
+
+      /* 🔴 REMOVE SCROLLBAR (ALL BROWSERS) */
+      scrollbar-width: none;          /* Firefox */
+      -ms-overflow-style: none;       /* IE/Edge */
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar {
+      display: none;                  /* Chrome, Safari */
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
-      color: #fff;
       line-height: 1.6;
+      color: #fff;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
       min-height: 100vh;
     }
 
-    /* ================= NAV ================= */
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      padding: 1rem;
       background: rgba(10, 10, 10, 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
+      padding: 1rem;
     }
 
     .nav-container {
@@ -56,17 +74,18 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* ================= CANVAS ================= */
+    /* ---------- CANVAS ---------- */
     #three-canvas {
       position: fixed;
       inset: 0;
       z-index: 1;
+      pointer-events: none;
     }
 
-    /* ================= HERO ================= */
-    .hero {
+    /* ---------- HERO ---------- */
+    .hero-section {
       min-height: 100vh;
-      padding: 7rem 1rem 3rem;
+      padding: 6rem 1rem 3rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -80,11 +99,18 @@
       width: 100%;
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 6vw, 4.5rem);
+    .hero-title {
       font-weight: 800;
       line-height: 1.15;
+      font-size: clamp(2rem, 6vw, 4.5rem);
       margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3.5vw, 1.4rem);
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
+      color: #eaeaea;
     }
 
     .gradient-text {
@@ -93,40 +119,37 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .hero p {
-      font-size: clamp(1rem, 3.5vw, 1.4rem);
-      max-width: 720px;
-      margin: 0 auto 2.5rem;
-      color: #eaeaea;
-    }
-
-    /* ================= BUTTON ================= */
+    /* ---------- BUTTON ---------- */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-height: 48px;
       padding: 1rem 2.4rem;
-      border-radius: 14px;
       font-size: 1.05rem;
       font-weight: 600;
+      border-radius: 14px;
+      text-decoration: none;
       border: none;
       cursor: pointer;
-      text-decoration: none;
+      transition: transform .3s ease, box-shadow .3s ease;
+      touch-action: manipulation;
+    }
+
+    .btn-primary {
       color: #fff;
       background: linear-gradient(135deg, #667eea, #764ba2);
       box-shadow: 0 6px 20px rgba(102,126,234,.35);
-      transition: transform .3s ease, box-shadow .3s ease;
     }
 
     @media (hover: hover) {
-      .btn:hover {
+      .btn-primary:hover {
         transform: translateY(-3px);
         box-shadow: 0 12px 30px rgba(102,126,234,.45);
       }
     }
 
-    /* ================= SECTION ================= */
+    /* ---------- SECTIONS ---------- */
     .section {
       padding: 5rem 1rem;
       max-width: 1200px;
@@ -145,14 +168,15 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* ================= PROCESS ================= */
-    .process {
+    /* ---------- PROCESS ---------- */
+    .process-steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+      margin-top: 3rem;
     }
 
-    .card {
+    .step-card {
       background: rgba(20,20,40,.9);
       border: 2px solid rgba(102,126,234,.5);
       border-radius: 18px;
@@ -160,43 +184,20 @@
       text-align: center;
     }
 
-    .number {
+    .step-number {
       width: 56px;
       height: 56px;
-      margin: 0 auto 1rem;
       border-radius: 50%;
       background: linear-gradient(135deg, #667eea, #764ba2);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
+      margin: 0 auto 1rem;
     }
 
-    /* ================= WHY ================= */
-    .why {
-      margin-top: 4rem;
-      background: rgba(20,20,40,.9);
-      border: 2px solid rgba(102,126,234,.5);
-      border-radius: 20px;
-      padding: 3rem;
-    }
-
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .why-card {
-      background: rgba(20,20,40,.9);
-      padding: 1.5rem;
-      border-radius: 14px;
-      border: 1px solid rgba(102,126,234,.35);
-    }
-
-    /* ================= FORM ================= */
-    .form {
+    /* ---------- FORM ---------- */
+    .contact-form {
       max-width: 600px;
       margin: 0 auto;
       padding: 2.5rem;
@@ -205,17 +206,18 @@
       border-radius: 22px;
     }
 
-    .field {
+    .form-group {
       margin-bottom: 1.4rem;
     }
 
-    label {
+    .form-group label {
       display: block;
       margin-bottom: .4rem;
       font-weight: 500;
     }
 
-    input, textarea, select {
+    .form-group input,
+    .form-group textarea {
       width: 100%;
       padding: .9rem;
       border-radius: 10px;
@@ -225,18 +227,33 @@
       font-size: 1rem;
     }
 
-    textarea {
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 2px rgba(102,126,234,.25);
+    }
+
+    textarea { 
       resize: vertical;
       min-height: 120px;
     }
 
-    /* ================= MOBILE ================= */
+    /* ---------- MOBILE ---------- */
     @media (max-width: 768px) {
       #three-canvas { display: none; }
-      .process { grid-template-columns: 1fr; }
-      .why-grid { grid-template-columns: 1fr; }
-      .why { padding: 2rem 1.5rem; }
-      .form { padding: 2rem 1.4rem; }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form {
+        padding: 2rem 1.4rem;
+      }
+
+      .btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -251,52 +268,161 @@
 
 <canvas id="three-canvas"></canvas>
 
-<section class="hero">
+<section class="hero-section">
   <div class="hero-content">
-    <h1>Get Your Bayside Jobs <span class="gradient-text">Sorted</span></h1>
-    <p>Tell us what you need done around your Bayside home. We’ll connect you with 3 trusted local professionals.</p>
-    <a href="#form" class="btn">Get Your 3 Recommendations</a>
+    <h1 class="hero-title">Get Your Bayside Jobs <span class="gradient-text">Sorted</span></h1>
+    <p class="hero-subtitle">
+      Tell us what you need done around your Bayside home.
+      We'll personally connect you with 3 trusted local professionals.
+    </p>
+    <a href="#request-form" class="btn btn-primary">Get Your 3 Recommendations</a>
   </div>
 </section>
 
 <section class="section">
   <h2 class="section-title">How It Works</h2>
-
-  <div class="process">
-    <div class="card">
-      <div class="number">1</div>
+  <div class="process-steps">
+    <div class="step-card">
+      <div class="step-number">1</div>
       <h3>Tell Us What You Need</h3>
-      <p>Describe the job, suburb, and timeframe.</p>
+      <p>Describe your job, location, and timeframe.</p>
     </div>
-    <div class="card">
-      <div class="number">2</div>
-      <h3>We Find the Right Match</h3>
-      <p>We hand-pick trusted local professionals.</p>
+    <div class="step-card">
+      <div class="step-number">2</div>
+      <h3>We Find Your Match</h3>
+      <p>We personally select the best local professionals.</p>
     </div>
-    <div class="card">
-      <div class="number">3</div>
+    <div class="step-card">
+      <div class="step-number">3</div>
       <h3>Get Recommendations</h3>
       <p>You receive 3 vetted options within 24 hours.</p>
     </div>
   </div>
+</section>
 
-  <div class="why">
-    <h3 style="text-align:center;">Why Choose Sorted?</h3>
+<section class="section" id="request-form">
+  <h2 class="section-title">Request Your Recommendations</h2>
+  <form class="contact-form" action="https://formspree.io/f/xqadyoko" method="POST">
+    <div class="form-group">
+      <label for="name">Name *</label>
+      <input id="name" type="text" name="name" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input id="email" type="email" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="job">Describe Your Job *</label>
+      <textarea id="job" name="job" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%">Get My 3 Recommendations</button>
+  </form>
+</section>
 
-    <div class="why-grid">
-      <div class="why-card">
-        <strong>✓ Locally Vetted</strong>
-        <p>Every professional is personally checked.</p>
-      </div>
-      <div class="why-card">
-        <strong>✓ Bayside Based</strong>
-        <p>All tradies are local to Bayside.</p>
-      </div>
-      <div class="why-card">
-        <strong>✓ No Obligation</strong>
-        <p>Free recommendations, no pressure.</p>
-      </div>
-      <div class="why-card">
-        <strong>✓ Personal Service</strong>
-        <p>Real people — not an algorithm.</p>
-      </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  let scene = new THREE.Scene();
+  let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  let renderer = new THREE.WebGLRenderer({
+    canvas: document.getElementById('three-canvas'),
+    alpha: true
+  });
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(2, 2, 2),
+    new THREE.MeshBasicMaterial({
+      color: 0x667eea,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.6
+    })
+  );
+  cube.position.set(-6, -2, -6);
+  scene.add(cube);
+
+  const torus = new THREE.Mesh(
+    new THREE.TorusGeometry(1.5, 0.45, 8, 24),
+    new THREE.MeshBasicMaterial({
+      color: 0x764ba2,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.7
+    })
+  );
+  torus.position.set(6, 2, -6);
+  scene.add(torus);
+
+  const particleCount = window.innerWidth < 768 ? 900 : 2000;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+
+  for (let i = 0; i < positions.length; i++) {
+    positions[i] = (Math.random() - 0.5) * 90;
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  const particles = new THREE.Points(
+    geometry,
+    new THREE.PointsMaterial({
+      size: window.innerWidth < 768 ? 1.2 : 1.6,
+      color: 0x667eea,
+      transparent: true,
+      opacity: 0.8
+    })
+  );
+
+  scene.add(particles);
+  camera.position.z = 10;
+
+  let mouseX = 0;
+  let mouseY = 0;
+
+  if (!isTouch) {
+    document.addEventListener('mousemove', e => {
+      mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = Date.now() * 0.001;
+
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    cube.position.y = -2 + Math.sin(t) * 0.4;
+
+    torus.rotation.x += 0.005;
+    torus.rotation.z += 0.015;
+    torus.position.y = 2 + Math.cos(t) * 0.4;
+
+    particles.rotation.y += 0.0008;
+
+    if (!isTouch) {
+      cube.rotation.y += mouseX * 0.01;
+      cube.rotation.x += mouseY * 0.01;
+      torus.rotation.y -= mouseX * 0.008;
+      torus.rotation.x -= mouseY * 0.008;
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
+
+</body>
+</html>
